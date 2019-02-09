@@ -2,19 +2,16 @@ from django import forms
 from.models import Message, Friend, Like
 from django.contrib.auth.models import User
 
-# Messageフォーム
 class MessageFrom(forms.ModelForm):
     class Meta:
         model  = Message
-        fields = ['owner', 'content']
+        fields = ['owner', 'content', 'photo']
 
-# Friendフォーム
 class FriendForm(forms.ModelForm):
     class Meta:
         model  = Friend
         fields = ['owner', 'user']
 
-# Likeフォーム
 class LikeForm(forms.ModelForm):
     class Meta:
         model = Like
@@ -30,7 +27,6 @@ class FriendsForm(forms.Form):
                 )
 
 class PostForm(forms.Form):
-    content = forms.CharField(max_length=150, widget = forms.Textarea)
-    def __init__(self, user, *args, **kwargs):
-        super(PostForm, self).__init__(*args, **kwargs)
-        public = User.objects.filter(username='admin').first()
+    class Meta:
+        model = Message
+        fields = ['content', 'photo',]

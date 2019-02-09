@@ -1,0 +1,30 @@
+{% extends 'app/layout.html' %}
+
+{% block title %} Post {% endblock %}
+
+{% block header %}
+<h1>Post</h1>
+{% if messages %}
+<ul class='messages'>
+  {% for message in messages %}
+  <li{% if message.tag %}  class='{{ message.tags }}'
+    {% endif %}>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'post' %}" method='post' enctype="multipart/form-data">{% csrf_token %}
+  <div>
+  <table>
+    {{form.as_table}}
+    <tr>
+      <td><input type="file" name="file"></td>
+      <td></td>
+      <td><button>Post!</button></td>
+    </tr>
+  </table>
+  </div>
+</form>
+{% endblock %}

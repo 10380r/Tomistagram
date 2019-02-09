@@ -6,20 +6,17 @@ class Message(models.Model):
     owner       = models.ForeignKey(User, on_delete=models.CASCADE, \
                   related_name = 'message_owner')
     content     = models.TextField(max_length=1000)
-    share_id    = models.IntegerField(default=-1)
+    photo       = models.ImageField(upload_to='documents/', default='defo')
     like_count  = models.IntegerField(default=0)
-    file_name   = models.CharField(max_length = 50)
     pub_date    = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '%s (%s)' %(self.content, self.owner)
 
-    def get_share(self):
-        return Message.objects.get(id=self.share_id)
-
     class Meta:
         # - にしておくと、新しい順での表示ができるらしい
         ordering = ('-pub_date',)
+
 
 class Friend(models.Model):
     owner   = models.ForeignKey(User, on_delete=models.CASCADE,\
