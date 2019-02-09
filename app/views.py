@@ -13,48 +13,32 @@ import sys, os
 @login_required(login_url='/admin/login/')
 def index(request):
     # POST時
-    if request.method == 'POST':
-        file = request.FILES['file']
-        path = os.path.join(UPLOADE_DIR, file.name)
-        destination = open(path, 'wb')
-        for chunk in file.chunks():
-            destination.write(chunk)
-        insert_data = FileNameModel(file_name = file.name)
-        insert_data.save()
+    # メッセージの取得
+    messages = Message.objects
 
-        #フォームの用意
-        searchform = SearchForm()
-        # groupのリストを取得
-        gps = Group.objects.filter(owner=request.user)
-        glist = [public_group]
-        for item in gps:
-            glist.append(item)
-        # メッセージの取得
-        messages = get_your_group_message(request.user, glist, None)
     params = {
             'login_user' : request.user,
-            'contents'  : messages,
-            'check_form' : checkform,
-            'search_form':searchform,
+            'contents'   : messages,
             }
     return  render(request, 'app/index.html', params)
 
 @login_required(login_url='/admin/login/')
 def post(request):
     # POST時
+    print(request.user)
     if request.method == 'POST':
         # 送信内容取得
-        content = request.POST['content']
+        content     = request.POST['content']
         msg         = Message(request.FILES)
         msg.owner   = request.user
-        msg.photo   = photo
+        msg.photo   = request.POST['photo']
         msg.content = content
         msg.save()
         return redirect(to='/app')
 
     # GET時
     else:
-        form = PostForm(request.user)
+        form = PostForm()
         
     params = {
             'login_user' : request.user,
@@ -84,4 +68,3 @@ def like(request, like_id):
 
     messages.success(request, 'Liked!')
     return redirect(to='/app')
-
