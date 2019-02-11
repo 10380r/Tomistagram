@@ -14,7 +14,7 @@ import sys, os
 def index(request):
     # POST時
     # メッセージの取得
-    messages = Message.objects
+    messages = Message.objects.all()
 
     params = {
             'login_user' : request.user,

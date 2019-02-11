@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Message(models.Model):
-    # shareやlikeがない場合を考慮し、foreignkeyを使用しなかった
     owner       = models.ForeignKey(User, on_delete=models.CASCADE, \
                   related_name = 'message_owner')
     content     = models.TextField(max_length=1000)
