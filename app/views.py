@@ -25,17 +25,16 @@ def index(request):
 @login_required(login_url='/admin/login/')
 def post(request):
     # POST時
-    print(request.user)
     if request.method == 'POST':
         # 送信内容取得
         content     = request.POST['content']
-        msg         = Message(request.FILES)
+        msg         = Message()
         msg.owner   = request.user
-        msg.photo   = request.POST['photo']
+       # msg.photo   = request.POST.get('photo')
+        msg.photo   = request.FILES['photo']
         msg.content = content
         msg.save()
         return redirect(to='/app')
-
     # GET時
     else:
         form = PostForm()
