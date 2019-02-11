@@ -15,14 +15,13 @@
 {% block content %}
 {% for item in contents %}
 <hr>
-</p>
-<img src='{{ item.photo.url }}' width='500' height='500'/>'
-<p class='message_content'>{{item.content}}</p>
-<p class='message_date'>{{item.pub_date}}</p>
-<p class='message_owner'>
-  <span class='message_counter'>
-    {{item.like_count}}likes</span>
-  <a href="{% url 'like' item.id %}"><button>♡</button></a>
-</p>
+  <div class='timeline'>
+    <p class='message_owner'>{{item.owner}}</p>
+    <img src='{{ item.photo.url }}' width='500' height='500'/>'
+    <p class='message_content'>{{item.content}}</p>
+    <p class='message_date'>{{item.pub_date}}</p>
+    <a href="{% url 'like' item.id %}"><button>♡</button></a>
+    <span class='message_counter'>{{item.like_count}}likes</span>
+  </div>
 {% endfor %}
 {% endblock %}
