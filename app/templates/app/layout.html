@@ -7,24 +7,31 @@
     <link rel='stylesheet' type='text/css'
           href="{% static 'app/style.css' %}" />
   </head>
-
+  <header>
+    <nav>
+      <ul>
+      <li id='logo'>
+        <a href="{% url 'index' %}">
+          <img src={% static 'app/images/logo.png' %} alt="tomistagram"  height='50'>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'post'  %}">
+          <img src={% static 'app/images/post.png' %} alt="post"  width='30'>
+        </a>
+      </li>
+      <li>
+        <a href='/admin/logout?next=/app/'>
+          <img src={% static 'app/images/logout.png' %} alt="logout"  width='30'>
+        </a>
+      </li>
+    </nav>
+  </header>
   <body>
     <div class='body_content'>
     <div class='body_content_inner'>
-      <table class='login_table' width='100%'>
-        <tr>
-          <th width='150px'>Tomistagram</th>
-          <td>
-            <table class='login_table_inner'>
-              <tr>
-                <td><a href="{% url 'index' %}">top</a></td>
-                <td><a href="{% url 'post'  %}">post</a></td>
-                <td><a href='/admin/logout?next=/app/'>logout</a></td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
+      <ul class='menu'>
+              </ul>
       <div class='header'>{% block header %}{% endblock %}</div>
       <div class='content'>{% block content %}{% endblock %}</div>
       <div class='footer'>
