@@ -8,6 +8,7 @@ from .forms import FriendsForm, PostForm
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 import sys, os
+from .imagenet import imagenet
 
 # indexのビュー関数
 @login_required(login_url='/admin/login/')
@@ -27,12 +28,13 @@ def post(request):
     # POST時
     if request.method == 'POST':
         # 送信内容取得
-        content     = request.POST['content']
-        msg         = Message()
-        msg.owner   = request.user
-       # msg.photo   = request.POST.get('photo')
-        msg.photo   = request.FILES['photo']
-        msg.content = content
+        msg             = Message()
+        msg.owner       = request.user
+        msg.photo       = request.FILES['photo']
+        imagenet_result = imagenet(msg.photo)[0]
+        msg.img_subject = imagenet_result[1]
+        msg.img_acc     = imagenet_result[2]
+        msg.content     = request.POST['content']
         msg.save()
         return redirect(to='/app')
     # GET時

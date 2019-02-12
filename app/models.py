@@ -6,6 +6,8 @@ class Message(models.Model):
                   related_name = 'message_owner')
     content     = models.TextField(max_length=1000)
     photo       = models.ImageField(upload_to='documents/', default='defo')
+    img_subject = models.TextField(blank=True, null=True)
+    img_acc     = models.FloatField(blank=True, null=True)
     like_count  = models.IntegerField(default=0)
     pub_date    = models.DateTimeField(auto_now_add=True)
 
