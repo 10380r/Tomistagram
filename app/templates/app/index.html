@@ -15,15 +15,25 @@
 {% block content %}
 {% for item in contents %}
 <hr>
-  <div class='timeline'>
-    <p class='message_owner'>{{item.owner}}</p>
-    <img src='{{ item.photo.url }}' width='700' height='auto'>
-    <p class='message_content'>{{item.content}}</p>
-    <p class='message_subject'>Imagenet inference is "{{item.img_subject}}".</p>
-    <p class='message_accuracy'>Probability     :      {{item.img_acc}}</p>
-    <p class='message_date'>{{item.pub_date}}</p>
-    <a href="{% url 'like' item.id %}"><button>♡</button></a>
-    <span class='message_counter'>{{item.like_count}}likes</span>
+  <div class='post_content'>
+    <div class='message_owner_bar'>
+      <p class='message_owner'>{{item.owner}}</p>
+    </div>
+    <div class='img_content'>
+      <img src='{{ item.photo.url }}' width='700' height='auto'>
+    </div>
+    <div class='message_comment'>
+      <div class='like'>
+        <a href="{% url 'like' item.id %}"><button>♡</button></a>
+        <span class='message_counter'>{{item.like_count}}likes</span>
+      </div>
+      <div class='comment>'>
+        <p class='message_content'>{{item.content}}</p>
+        <p class='message_subject'>Imagenet inference is "{{item.img_subject}}".</p>
+        <p class='message_accuracy'>Probability     :      {{item.img_acc}}</p>
+        <p class='message_date'>{{item.pub_date}}</p>
+      </div>
+    </div>
   </div>
 {% endfor %}
 {% endblock %}
