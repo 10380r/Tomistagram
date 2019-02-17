@@ -1,5 +1,6 @@
 body {
   text-align:center;
+  background-color:#fafafa;
 }
 
 ul {
@@ -7,5 +8,6 @@ ul {
   list-style: none;
   li:first-child {
     margin-right: auto;
-  }
 }
+
+

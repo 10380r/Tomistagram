@@ -7,7 +7,7 @@ from .forms import FriendsForm, PostForm
 
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-import sys, os
+import sys, os, pickle
 from .imagenet import imagenet
 
 # indexのビュー関数
@@ -23,19 +23,25 @@ def index(request):
             }
     return  render(request, 'app/index.html', params)
 
+
 @login_required(login_url='/admin/login/')
 def post(request):
     # POST時
     if request.method == 'POST':
         # 送信内容取得
+
         msg             = Message()
         msg.owner       = request.user
         msg.photo       = request.FILES['photo']
-        imagenet_result = imagenet(msg.photo)[0]
-        msg.img_subject = imagenet_result[1]
-        msg.img_acc     = imagenet_result[2]
+        imagenet_result = imagenet(msg.photo)
+        msg.img_subject = imagenet_result[0][1]
+        msg.img_acc     = imagenet_result[0][2]
         msg.content     = request.POST['content']
         msg.save()
+
+        with open('pickles/%s.pkl' %(str(msg.owner).replace('@','')), 'ab') as f:
+            pickle.dump(imagenet_result, f)
+
         return redirect(to='/app')
     # GET時
     else:
@@ -46,6 +52,7 @@ def post(request):
             'form'       : form,
             }
     return render(request, 'app/post.html', params)
+
 
 @login_required(login_url='/admin/login/')
 def like(request, like_id):

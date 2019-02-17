@@ -14,5 +14,5 @@ def imagenet(file):
     # モデルにかけて推論
     preds = model.predict(preprocess_input(x))
     #推論結果
-    results = decode_predictions(preds)[0]
+    results = decode_predictions(preds)
     return results
