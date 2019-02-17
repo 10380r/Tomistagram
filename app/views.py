@@ -33,14 +33,25 @@ def post(request):
         msg             = Message()
         msg.owner       = request.user
         msg.photo       = request.FILES['photo']
-        imagenet_result = imagenet(msg.photo)
-        msg.img_subject = imagenet_result[0][1]
-        msg.img_acc     = imagenet_result[0][2]
+        imagenet_results = imagenet(msg.photo)
+        msg.img_subject = imagenet_results[0][1]
+        msg.img_acc     = imagenet_results[0][2]
         msg.content     = request.POST['content']
         msg.save()
 
-        with open('pickles/%s.pkl' %(str(msg.owner).replace('@','')), 'ab') as f:
-            pickle.dump(imagenet_result, f)
+        result_dic = {obj:pred for ctg,obj,pred in imagenet_results}
+
+        try:
+            with open('pickles/%s.pkl' %(str(msg.owner).replace('@','')), 'rb') as f:
+                user_results = pickle.load(f)
+                user_results.append(imagenet_results) 
+            with open('pickles/%s.pkl' %(str(msg.owner).replace('@','')), 'wb') as f:
+                pickle.dump(user_results, f)
+
+        # 初投稿の場合
+        except FileNotFoundError:
+            with open('pickles/%s.pkl' %(str(msg.owner).replace('@','')), 'wb') as f:
+                pickle.dump(imagenet_results, f)
 
         return redirect(to='/app')
     # GET時
