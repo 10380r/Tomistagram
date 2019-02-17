@@ -44,14 +44,19 @@ def post(request):
         try:
             with open('pickles/%s.pkl' %(str(msg.owner).replace('@','')), 'rb') as f:
                 user_results = pickle.load(f)
-                user_results.append(imagenet_results) 
+                for obj,pred in result_dic.items():
+                    if obj in user_results.keys():
+                        user_results[obj] += pred
+                    else:
+                        user_results[obj] = pred
+
             with open('pickles/%s.pkl' %(str(msg.owner).replace('@','')), 'wb') as f:
                 pickle.dump(user_results, f)
 
         # 初投稿の場合
         except FileNotFoundError:
             with open('pickles/%s.pkl' %(str(msg.owner).replace('@','')), 'wb') as f:
-                pickle.dump(imagenet_results, f)
+                pickle.dump(result_dic, f)
 
         return redirect(to='/app')
     # GET時
