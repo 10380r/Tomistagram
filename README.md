@@ -1,4 +1,4 @@
-#SNS with ml
+# SNS with ml
 
 ## ポートフォリオとして人様に見せても恥ずかしくないアプリケーションを作成していく。
 
@@ -6,7 +6,12 @@
 - DjangoでSNSを作成
   - イメージはインスタグラム
 - 画像アップロード機能
-- 投稿した画像にimagenetを噛ませて画像の推論結果をラベリング
-- コサイン類似度を計算しユーザーのレコメンド機能を実装
+- VGG16で画像をラベリング
+- 投稿画像を元にユーザー同士の類似度を計算し、レコメンド機能を実装
 
-usage
+### Usage
+
+### Requirements
+
+### 参考文献
+https://algorithm.joho.info/machine-learning/python-keras-cnn-vgg16/
