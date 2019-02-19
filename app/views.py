@@ -105,3 +105,7 @@ def recommend(request):
             }
 
     return  render(request, 'app/recommend.html', params)
+
+@login_required(login_url='/admin/login/')
+def recommend(request):
+    

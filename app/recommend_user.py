@@ -1,5 +1,4 @@
 import numpy as np
-import pandas as pd
 import pickle,django,os,sys
 
 def get_pkl(user):
