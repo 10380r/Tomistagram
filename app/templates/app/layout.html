@@ -21,10 +21,16 @@
         </a>
       </li>
       <li>
+        <a href="{% url 'recommend'  %}">
+          <img src={% static 'app/images/recommend.png' %} alt="recommend"  width='30'>
+        </a>
+      </li>
+      <li>
         <a href='/admin/logout?next=/app/'>
           <img src={% static 'app/images/logout.png' %} alt="logout"  width='30'>
         </a>
       </li>
+      <li>{{ request.user }}</li>
     </div>
   </header>
   <body>

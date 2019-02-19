@@ -19,22 +19,37 @@ def get_users():
     users = [user for user in User.objects.all()]
     return users 
 
-def reccomend_user(me)):
+def reccomend_user(me):
     my_dict  = get_pkl(me)
     my_array = np.fromiter(my_dict.values(), dtype=float)
     users    = get_users()
     most_sim      = 0
     most_sim_user = ''
     for user in users:
+        user = str(user).replace('@','')
+        print(user)
         if user == me:
             continue
         else:
-            user_dict = get_pkl(user)
-            user_array = np.fromiter(user_dict.values(), dtype=float)
-
-            similarity = sim_cos(my_array, user_array)
-            if most_sim < similarity:
-                most_sim = similarity
-                most_sim_user = user
+            try:
+                user_dict  = get_pkl(user)
+                user_array = np.fromiter(user_dict.values(), dtype=float)
+                print(user_array)
+                similarity = sim_cos(my_array, user_array)
+                print(similarity)
+                if most_sim < similarity:
+                    most_sim = similarity
+                    most_sim_user = user
+                    print(most_sim_user)
+            except FileNotFoundError:
+                print('FNFE')
+                continue
 
     return most_sim, most_sim_user
+
+def main():
+    print(reccomend_user('Masami_Nagasawa'))
+
+if __name__ == '__main__':
+    main()
+

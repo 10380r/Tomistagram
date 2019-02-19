@@ -9,6 +9,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 import sys, os, pickle
 from .imagenet import imagenet
+#import recommend_user
 
 # indexのビュー関数
 @login_required(login_url='/admin/login/')
@@ -92,3 +93,15 @@ def like(request, like_id):
 
     messages.success(request, 'Liked!')
     return redirect(to='/app')
+
+
+@login_required(login_url='/admin/login/')
+def recommend(request):
+
+    #recomend_user = recomend_user(request.user)
+    params = {
+            'login_user'     : request.user,
+           # 'reccomend_user' : recommend_user,
+            }
+
+    return  render(request, 'app/recommend.html', params)

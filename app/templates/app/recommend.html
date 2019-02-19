@@ -1,0 +1,20 @@
+{% extends 'app/layout.html' %}
+
+{% block title %} Recommend For You {% endblock %}
+
+{% block header %}
+<h1>Recommend User For You</h1>
+{% if messages %}
+<ul class='messages'>
+  {% for message in messages %}
+  <li{% if message.tag %}  class='{{ message.tags }}'
+    {% endif %}>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<h4>Hello, {{ request.user }} </h4>
+<span><a href='his_page'>{{ recommend_user }}</a></span>
+{% endblock %}
