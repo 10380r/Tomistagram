@@ -9,7 +9,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 import sys, os, pickle
 from .imagenet import imagenet
-#import recommend_user
+from .recommend_user import recommend_user
 
 # indexのビュー関数
 @login_required(login_url='/admin/login/')
@@ -31,19 +31,19 @@ def post(request):
     if request.method == 'POST':
         # 送信内容取得
 
-        msg             = Message()
-        msg.owner       = request.user
-        msg.photo       = request.FILES['photo']
+        msg              = Message()
+        msg.owner        = request.user
+        msg.photo        = request.FILES['photo']
         imagenet_results = imagenet(msg.photo)
-        msg.img_subject = imagenet_results[0][1]
-        msg.img_acc     = imagenet_results[0][2]
-        msg.content     = request.POST['content']
+        msg.img_subject  = imagenet_results[0][1]
+        msg.img_acc      = imagenet_results[0][2]
+        msg.content      = request.POST['content']
         msg.save()
 
         result_dic = {obj:pred for ctg,obj,pred in imagenet_results}
 
         try:
-            with open('pickles/%s.pkl' %(str(msg.owner).replace('@','')), 'rb') as f:
+            with open('pickles/%s.pkl' %(msg.owner), 'rb') as f:
                 user_results = pickle.load(f)
                 for obj,pred in result_dic.items():
                     if obj in user_results.keys():
@@ -51,12 +51,12 @@ def post(request):
                     else:
                         user_results[obj] = pred
 
-            with open('pickles/%s.pkl' %(str(msg.owner).replace('@','')), 'wb') as f:
+            with open('pickles/%s.pkl' %(msg.owner), 'wb') as f:
                 pickle.dump(user_results, f)
 
         # 初投稿の場合
         except FileNotFoundError:
-            with open('pickles/%s.pkl' %(str(msg.owner).replace('@','')), 'wb') as f:
+            with open('pickles/%s.pkl' %(msg.owner), 'wb') as f:
                 pickle.dump(result_dic, f)
 
         return redirect(to='/app')
@@ -98,14 +98,11 @@ def like(request, like_id):
 @login_required(login_url='/admin/login/')
 def recommend(request):
 
-    #recomend_user = recomend_user(request.user)
+    most_sim, most_sim_user = recommend_user(request.user)
     params = {
             'login_user'     : request.user,
-           # 'reccomend_user' : recommend_user,
+            'recommend_user' : most_sim_user,
+            'similarity'     : most_sim,
             }
 
     return  render(request, 'app/recommend.html', params)
-
-@login_required(login_url='/admin/login/')
-def recommend(request):
-    
