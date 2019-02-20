@@ -43,7 +43,7 @@ def post(request):
             msg.save()
 
         except TypeError:
-            return 'Sorry, something to wrong. Try again...'
+            messages.success(request, 'Sorry, something to wrong. Try again...')
 
         result_dic = {obj:pred for ctg,obj,pred in imagenet_results}
 
@@ -111,3 +111,12 @@ def recommend(request):
             }
 
     return  render(request, 'app/recommend.html', params)
+
+#class OnlyYouMixin(UserPassesTestMixin):
+#    def test_func(self):
+#        user = self.request.user
+#        return user.pk == self.keargs['pk'] or user.is_superuser
+#
+#class UserDetail(OnlyYouMixin, generic.DetailView):
+#    model         = User
+#    template_name = 'app/user_detail.html'

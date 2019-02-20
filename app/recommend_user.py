@@ -19,14 +19,13 @@ def get_users():
     return users 
 
 def recommend_user(me):
-    my_dict  = get_pkl(me)
-    my_array = np.fromiter(my_dict.values(), dtype=float)
-    users    = get_users()
+    my_dict       = get_pkl(me)
+    my_array      = np.fromiter(my_dict.values(), dtype=float)
+    users         = get_users()
     most_sim      = 0
     most_sim_user = ''
     for user in users:
         if user == me:
-            print('me!')
             continue
         else:
             try:
