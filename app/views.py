@@ -34,11 +34,16 @@ def post(request):
         msg              = Message()
         msg.owner        = request.user
         msg.photo        = request.FILES['photo']
-        imagenet_results = imagenet(msg.photo)
-        msg.img_subject  = imagenet_results[0][1]
-        msg.img_acc      = imagenet_results[0][2]
-        msg.content      = request.POST['content']
-        msg.save()
+        # vggで稀に発生するエラーが発生した場合にメッセージを投げる
+        try:
+            imagenet_results = imagenet(msg.photo)
+            msg.img_subject  = imagenet_results[0][1]
+            msg.img_acc      = imagenet_results[0][2]
+            msg.content      = request.POST['content']
+            msg.save()
+
+        except TypeError:
+            return 'Sorry, something to wrong. Try again...'
 
         result_dic = {obj:pred for ctg,obj,pred in imagenet_results}
 
