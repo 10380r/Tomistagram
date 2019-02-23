@@ -18,7 +18,6 @@ class Message(models.Model):
         # - にしておくと、新しい順での表示ができるらしい
         ordering = ('-pub_date',)
 
-
 class Friend(models.Model):
     owner   = models.ForeignKey(User, on_delete=models.CASCADE,\
               related_name='friend_owner')

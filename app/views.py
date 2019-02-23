@@ -1,9 +1,11 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib import messages
-
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Message, Friend, Like
 from .forms import FriendsForm, PostForm
+from django.views import generic
 
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -41,11 +43,10 @@ def post(request):
             msg.img_acc      = imagenet_results[0][2]
             msg.content      = request.POST['content']
             msg.save()
+            result_dic = {obj:pred for ctg,obj,pred in imagenet_results}
 
         except TypeError:
             messages.success(request, 'Sorry, something to wrong. Try again...')
-
-        result_dic = {obj:pred for ctg,obj,pred in imagenet_results}
 
         try:
             with open('pickles/%s.pkl' %(msg.owner), 'rb') as f:
@@ -102,21 +103,21 @@ def like(request, like_id):
 
 @login_required(login_url='/admin/login/')
 def recommend(request):
-
-    most_sim, most_sim_user = recommend_user(request.user)
+    results = recommend_user(request.user)
+    print('Dic is ', results)
     params = {
-            'login_user'     : request.user,
-            'recommend_user' : most_sim_user,
-            'similarity'     : most_sim,
+            'login_user' : request.user,
+            'results'    : results
             }
 
     return  render(request, 'app/recommend.html', params)
 
-#class OnlyYouMixin(UserPassesTestMixin):
-#    def test_func(self):
-#        user = self.request.user
-#        return user.pk == self.keargs['pk'] or user.is_superuser
-#
-#class UserDetail(OnlyYouMixin, generic.DetailView):
-#    model         = User
-#    template_name = 'app/user_detail.html'
+class OnlyYouMixin(UserPassesTestMixin):
+    def test_func(self):
+        user = self.request.user
+        return user.pk == self.keargs['pk'] or user.is_superuser
+
+class UserDetail(OnlyYouMixin, generic.DetailView):
+    User          = get_user_model()
+    model         = User
+    template_name = 'app/user_detail.html'

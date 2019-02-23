@@ -16,5 +16,8 @@
 
 {% block content %}
 <h4>Hello, {{ request.user }} </h4>
-<span><a href='his_page'>{{ recommend_user }}</a></span>
+{% for result_user,result_pred in results.items %}
+  <span><a href='user_detail'>{{ result_user }}</a></span>
+  <span>Similarity : {{ result_pred }} </span>
+{% endfor %}
 {% endblock %}
