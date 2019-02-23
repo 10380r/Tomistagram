@@ -45,10 +45,12 @@ def post(request):
             msg.save()
             result_dic = {obj:pred for ctg,obj,pred in imagenet_results}
 
+        #TODO 結局エラーメッセージが画面に出力される。画面を遷移させるには新しいviewを作らないと(実装未定)
         except TypeError:
             messages.success(request, 'Sorry, something to wrong. Try again...')
 
-        try:
+        # ファイルが存在する場合
+        if os.path.isfile('pickles'):
             with open('pickles/%s.pkl' %(msg.owner), 'rb') as f:
                 user_results = pickle.load(f)
                 for obj,pred in result_dic.items():
@@ -61,7 +63,7 @@ def post(request):
                 pickle.dump(user_results, f)
 
         # 初投稿の場合
-        except FileNotFoundError:
+        else:
             with open('pickles/%s.pkl' %(msg.owner), 'wb') as f:
                 pickle.dump(result_dic, f)
 
