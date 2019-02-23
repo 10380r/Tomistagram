@@ -48,5 +48,9 @@ def recommend_user(me):
             except FileNotFoundError:
                 continue
 
-    results = {'most_sim_user':most_sim, 'second_sim_user':second_sim, 'third_sim_user':third_sim}
+    results = {
+            most_sim_user   : most_sim,
+            second_sim_user : second_sim,
+            third_sim_user  : third_sim,
+            }
     return results
