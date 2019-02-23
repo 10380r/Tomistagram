@@ -51,9 +51,10 @@ def post(request):
         user_pkl_filepath = 'pickles/%s.pkl' %(msg.owner)
         # ファイルが存在する場合
         if os.path.isfile(user_pkl_filepath):
-            # 現存ファイルを読み込み、辞書を書き換える
+            # 現存ファイルを読み込み、Dictを書き換える
             with open(user_pkl_filepath, 'rb') as f:
                 user_results = pickle.load(f)
+                # 現存dictとカラムに重複があった場合に値を足し、存在しない場合は新規追加する
                 for obj,pred in results_dic.items():
                     if obj in user_results.keys():
                         user_results[obj] += pred
@@ -65,14 +66,14 @@ def post(request):
 
         # 初投稿の場合
         else:
-            with open('pickles/%s.pkl' %(msg.owner), 'wb') as f:
+            with open(user_pkl_filepath, 'wb') as f:
                 pickle.dump(results_dic, f)
 
         return redirect(to='/app')
     # GET時
     else:
         form = PostForm()
-        
+
     params = {
             'login_user' : request.user,
             'form'       : form,
@@ -106,13 +107,12 @@ def like(request, like_id):
 
 @login_required(login_url='/admin/login/')
 def recommend(request):
+    # 類似度が近しいユーザの3人Dict
     results = recommend_user(request.user)
-    print('Dic is ', results)
     params = {
             'login_user' : request.user,
             'results'    : results
             }
-
     return  render(request, 'app/recommend.html', params)
 
 class OnlyYouMixin(UserPassesTestMixin):
