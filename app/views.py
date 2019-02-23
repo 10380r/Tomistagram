@@ -32,7 +32,6 @@ def post(request):
     # POST時
     if request.method == 'POST':
         # 送信内容取得
-
         msg              = Message()
         msg.owner        = request.user
         msg.photo        = request.FILES['photo']
@@ -43,29 +42,31 @@ def post(request):
             msg.img_acc      = imagenet_results[0][2]
             msg.content      = request.POST['content']
             msg.save()
-            result_dic = {obj:pred for ctg,obj,pred in imagenet_results}
+            results_dic = {obj:pred for ctg,obj,pred in imagenet_results}
 
         #TODO 結局エラーメッセージが画面に出力される。画面を遷移させるには新しいviewを作らないと(実装未定)
         except TypeError:
             messages.success(request, 'Sorry, something to wrong. Try again...')
 
+        user_pkl_filepath = 'pickles/%s.pkl' %(msg.owner)
         # ファイルが存在する場合
-        if os.path.isfile('pickles'):
-            with open('pickles/%s.pkl' %(msg.owner), 'rb') as f:
+        if os.path.isfile(user_pkl_filepath):
+            # 現存ファイルを読み込み、辞書を書き換える
+            with open(user_pkl_filepath, 'rb') as f:
                 user_results = pickle.load(f)
-                for obj,pred in result_dic.items():
+                for obj,pred in results_dic.items():
                     if obj in user_results.keys():
                         user_results[obj] += pred
                     else:
                         user_results[obj] = pred
-
-            with open('pickles/%s.pkl' %(msg.owner), 'wb') as f:
+            # ファイル保存
+            with open(user_pkl_filepath, 'wb') as f:
                 pickle.dump(user_results, f)
 
         # 初投稿の場合
         else:
             with open('pickles/%s.pkl' %(msg.owner), 'wb') as f:
-                pickle.dump(result_dic, f)
+                pickle.dump(results_dic, f)
 
         return redirect(to='/app')
     # GET時
