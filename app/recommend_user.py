@@ -36,16 +36,17 @@ def recommend_user(me):
                 if most_sim < similarity:
                     most_sim        = similarity
                     most_sim_user   = user
-                    print('1: ', most_sim_user)
+                    print('1:', most_sim_user)
                 elif second_sim < similarity:
                     second_sim      = similarity
                     second_sim_user = user
-                    print('2: ', second_sim_user)
+                    print('2:', second_sim_user)
                 elif third_sim < similarity:
                     third_sim       = similarity
                     third_sim_user  = user
-                    print('3: ', third_sim_user)
+                    print('3:', third_sim_user)
             except FileNotFoundError:
+                print('"' + str(user) + '"', 'has not posted yet')
                 continue
 
     results = {
@@ -53,4 +54,5 @@ def recommend_user(me):
             second_sim_user : second_sim,
             third_sim_user  : third_sim,
             }
+    print('Recommend dict => ', results)
     return results
