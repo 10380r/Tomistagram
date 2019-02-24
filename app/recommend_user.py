@@ -23,9 +23,10 @@ def recommend_user(me):
     my_dict       = get_pkl(me)
     my_array      = np.fromiter(my_dict.values(), dtype=float)
     users         = get_users()
-    most_sim, second_sim, third_sim  = 0, 0, 0
-    most_sim_user, second_sim_user, third_sim_user = '', '', ''
+    recommend_users = []
+    # 類似しているユーザーを辞書にする
     for user in users:
+        # 自身の場合スキップ
         if user == me:
             continue
         else:
@@ -33,26 +34,23 @@ def recommend_user(me):
                 user_dict  = get_pkl(user)
                 user_array = np.fromiter(user_dict.values(), dtype=float)
                 similarity = sim_cos(my_array, user_array)
-                if most_sim < similarity:
-                    most_sim        = similarity
-                    most_sim_user   = user
-                    print('1:', most_sim_user)
-                elif second_sim < similarity:
-                    second_sim      = similarity
-                    second_sim_user = user
-                    print('2:', second_sim_user)
-                elif third_sim < similarity:
-                    third_sim       = similarity
-                    third_sim_user  = user
-                    print('3:', third_sim_user)
+                user_tuple = (user,similarity)
+                # 先頭3人をトップ３と仮に置く
+                if len(recommend_users) < 3:
+                    recommend_users.append(user_tuple)
+                    print('ADDED => ', recommend_users, '\n')
+                # 3位と比較して大きいようならDictに追加
+                else:
+                    if recommend_users[2][1] < similarity:
+                        recommend_users.append(user_tuple)
+                # 類似度でソート
+                recommend_users = sorted(recommend_users, key=lambda x:x[1], reverse=True)
+                print('SORTED =>', recommend_users, '\n')
+            # 投稿したことがないユーザの場合の例外処理
             except FileNotFoundError:
-                print('"' + str(user) + '"', 'has not posted yet')
+                print('"' + str(user) + '"', 'HAS NOT POSTED YET', '\n')
                 continue
-
-    results = {
-            most_sim_user   : most_sim,
-            second_sim_user : second_sim,
-            third_sim_user  : third_sim,
-            }
-    print('Recommend dict => ', results)
+    # 上位3人のみ取得
+    results = {user:sim for user,sim in recommend_users[:3]}
+    print('RECOMMEND DICT => ', results, '\n')
     return results
