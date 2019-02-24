@@ -6,7 +6,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Message, Friend, Like
 from .forms import FriendsForm, PostForm
 from django.views import generic
-
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 import sys, os, pickle
@@ -115,12 +114,17 @@ def recommend(request):
             }
     return  render(request, 'app/recommend.html', params)
 
-class OnlyYouMixin(UserPassesTestMixin):
-    def test_func(self):
-        user = self.request.user
-        return user.pk == self.keargs['pk'] or user.is_superuser
+#class OnlyYouMixin(UserPassesTestMixin):
+#    def test_func(self):
+#        user = self.request.user
+#        return user.pk == self.kwargs['pk'] or user.is_superuser
 
-class UserDetail(OnlyYouMixin, generic.DetailView):
-    User          = get_user_model()
-    model         = User
-    template_name = 'app/user_detail.html'
+@login_required(login_url='/admin/login/')
+def user_detail(request,pk):
+    print(pk)
+    params = {
+            'login_user' : request.user,
+            'user'       : User.objects.get(pk=pk),
+            'contents'   : Message.objects.all(),
+            }
+    return render(request, 'app/user_detail.html', params)

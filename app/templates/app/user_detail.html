@@ -1,14 +1,11 @@
 {% extends 'app/layout.html' %}
 {% block content %}
-
 <hr>
+<h2>{{ user.username }}</h2>
   <div class='post_content'>
     <div class='message_owner_bar'>
-      <p class='message_owner'>{{user.username}}</p>
     </div>
     <div class='img_content'>
-      <img src='{{ item.photo.url }}' width='700' height='auto'>
     </div>
   </div>
-{% endfor %}
 {% endblock %}
