@@ -1,11 +1,29 @@
 {% extends 'app/layout.html' %}
+
 {% block content %}
 <hr>
 <h2>{{ user.username }}</h2>
   <div class='post_content'>
     <div class='message_owner_bar'>
-    </div>
-    <div class='img_content'>
+      {% for item in contents %}
+      <hr>
+        <div class='post_content'>
+          <div class='img_content'>
+            {% if item.owner == user.username %}
+                <img src='{{ item.photo.url }}' width='700' height='auto'>
+           </div>
+              <div class='message_comment'>
+                <div class='like'>
+                  <a href="{% url 'like' item.id %}"><button>♡</button></a>
+                  <span class='message_counter'>{{item.like_count}}likes</span>
+                </div>
+                <div class='comment>'>
+                  <p class='message_content'>{{item.content}}</p>
+                  <p class='message_date'>{{item.pub_date}}</p>
+            {% endif %}
+      {% endfor %}
+                </div>
+              </div>
     </div>
   </div>
 {% endblock %}
