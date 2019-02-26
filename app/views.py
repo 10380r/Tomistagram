@@ -47,11 +47,11 @@ def post(request):
         except TypeError:
             messages.success(request, 'Sorry, something to wrong. Try again...')
 
-        user_pkl_filepath = 'pickles/%s.pkl' %(msg.owner)
+        user_idl_filepath = 'pickles/%s.idl' %(msg.owner)
         # ファイルが存在する場合
-        if os.path.isfile(user_pkl_filepath):
+        if os.path.isfile(user_idl_filepath):
             # 現存ファイルを読み込み、Dictを書き換える
-            with open(user_pkl_filepath, 'rb') as f:
+            with open(user_idl_filepath, 'rb') as f:
                 user_results = pickle.load(f)
                 # 現存dictとカラムに重複があった場合に値を足し、存在しない場合は新規追加する
                 for obj,pred in results_dic.items():
@@ -60,12 +60,12 @@ def post(request):
                     else:
                         user_results[obj] = pred
             # ファイル保存
-            with open(user_pkl_filepath, 'wb') as f:
+            with open(user_idl_filepath, 'wb') as f:
                 pickle.dump(user_results, f)
 
         # 初投稿の場合
         else:
-            with open(user_pkl_filepath, 'wb') as f:
+            with open(user_idl_filepath, 'wb') as f:
                 pickle.dump(results_dic, f)
 
         return redirect(to='/app')
@@ -114,17 +114,16 @@ def recommend(request):
             }
     return  render(request, 'app/recommend.html', params)
 
-#class OnlyYouMixin(UserPassesTestMixin):
-#    def test_func(self):
-#        user = self.request.user
-#        return user.pk == self.kwargs['pk'] or user.is_superuser
 
 @login_required(login_url='/admin/login/')
-def user_detail(request,pk):
-    print(pk)
+def user_detail(request,user_id):
+    user_contents = Message.objects.get(id=user_id)
+    user          = User.objects.get(id=user_id)
+    print(user_contents)
+    print('i am ',user)
     params = {
             'login_user' : request.user,
-            'user'       : User.objects.get(pk=pk),
-            'contents'   : Message.objects.all(),
+            'user'       : user,
+            'contents'   : user_contents,
             }
     return render(request, 'app/user_detail.html', params)

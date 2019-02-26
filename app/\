@@ -33,16 +33,18 @@
         </li>
       </ul>
     </div>
+    <hr>
   </header>
   <body>
     <div>
-      <p class='login_user'><a href='user_detail/{{ request.user.id }}'>{{ request.user  }}</a></p>
+      <p class='login_user'><a href='user_detail/'>{{ request.user  }}</a></p>
     </div>
     <div class='body_content'>
       <div class='body_content_inner'>
         <div class='header'>{% block header %}{% endblock %}</div>
         <div class='content'>{% block content %}{% endblock %}</div>
         <div class='footer'>
+        </hr>
       </div>
     </div>
   </body>

@@ -24,7 +24,7 @@
     </tr>
     {% for result_user,result_pred in results.items %}
     <tr>
-      <th><a href='user_detail/{{ result_user.pk }}'>{{ result_user }}</a></th>
+      <th><a href='user_detail/{{ result_user.id }}'>{{ result_user }}</a></th>
       <td>{{ result_pred }}</td>
     </tr>
     {% endfor %}
