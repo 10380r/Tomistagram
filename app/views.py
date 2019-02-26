@@ -103,7 +103,6 @@ def like(request, like_id):
     messages.success(request, 'Liked!')
     return redirect(to='/app')
 
-
 @login_required(login_url='/admin/login/')
 def recommend(request):
     # 類似度が近しいユーザの3人Dict
@@ -114,13 +113,10 @@ def recommend(request):
             }
     return  render(request, 'app/recommend.html', params)
 
-
 @login_required(login_url='/admin/login/')
-def user_detail(request,user_id):
-    user_contents = Message.objects.get(id=user_id)
-    user          = User.objects.get(id=user_id)
-    print(user_contents)
-    print('i am ',user)
+def user_detail(request,id):
+    user_contents = Message.objects.all()
+    user          = User.objects.get(id=id)
     params = {
             'login_user' : request.user,
             'user'       : user,

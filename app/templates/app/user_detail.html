@@ -9,7 +9,8 @@
       <hr>
         <div class='post_content'>
           <div class='img_content'>
-            {% if item.owner == user.username %}
+            {% if item.owner == user %}
+            <p>{{ item.owner }}</p>
                 <img src='{{ item.photo.url }}' width='700' height='auto'>
            </div>
               <div class='message_comment'>
