@@ -46,11 +46,11 @@ def post(request):
         except TypeError:
             messages.success(request, 'Sorry, something to wrong. Try again...')
 
-        user_idl_filepath = 'pickles/%s.idl' %(msg.owner)
+        user_pkl_filepath = 'pickles/%s.pkl' %(msg.owner)
         # ファイルが存在する場合
-        if os.path.isfile(user_idl_filepath):
+        if os.path.isfile(user_pkl_filepath):
             # 現存ファイルを読み込み、Dictを書き換える
-            with open(user_idl_filepath, 'rb') as f:
+            with open(user_pkl_filepath, 'rb') as f:
                 user_results = pickle.load(f)
                 # 現存dictとカラムに重複があった場合に値を足し、存在しない場合は新規追加する
                 for obj,pred in results_dic.items():
@@ -59,12 +59,12 @@ def post(request):
                     else:
                         user_results[obj] = pred
             # ファイル保存
-            with open(user_idl_filepath, 'wb') as f:
+            with open(user_pkl_filepath, 'wb') as f:
                 pickle.dump(user_results, f)
 
         # 初投稿の場合
         else:
-            with open(user_idl_filepath, 'wb') as f:
+            with open(user_pkl_filepath, 'wb') as f:
                 pickle.dump(results_dic, f)
 
         return redirect(to='/app')

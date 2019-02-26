@@ -3,7 +3,9 @@
 {% block title %} Recommend For You {% endblock %}
 
 {% block header %}
-<h1>Recommend User For You</h1>
+<div class='title_recommend'>
+  <h1>Recommend User For You</h1>
+</div>
 {% if messages %}
 <ul class='messages'>
   {% for message in messages %}
@@ -24,7 +26,7 @@
     </tr>
     {% for result_user,result_pred in results.items %}
     <tr>
-      <th><a href='user_detail/{{ result_user.id }}'>{{ result_user }}</a></th>
+      <th class='user_recommend'><a href='user_detail/{{ result_user.id }}'>{{ result_user }}</a></th>
       <td>{{ result_pred }}</td>
     </tr>
     {% endfor %}

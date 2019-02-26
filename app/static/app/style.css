@@ -19,6 +19,19 @@ body {
   padding:78px 40px 0px 70px;
 }
 
+td {
+  align:left;
+}
+
+.recommend_user_table {
+  text-align:center;
+  font-size:20px;
+  width:50%;
+  height:auto;
+  margin:0;
+  margin-top:120px;
+}
+
 .post {
   width:30px;
   height:auto;
@@ -48,6 +61,13 @@ body {
 
 .post_content {
   text-align:center;
+}
+
+.message_owner {
+  text-align:left;
+}
+.message_comment {
+  text-align:left;
 }
 
 ul {
