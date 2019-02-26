@@ -1,16 +1,18 @@
 {% extends 'app/layout.html' %}
 
 {% block content %}
+<div>
+  <p class='login_user'><a href='{{ request.user.id  }}'>{{ request.user }}</a></p>
+</div>
 <hr>
 <h2>{{ user.username }}</h2>
   <div class='post_content'>
     <div class='message_owner_bar'>
       {% for item in contents %}
+        {% if item.owner == user %}
       <hr>
         <div class='post_content'>
           <div class='img_content'>
-            {% if item.owner == user %}
-            <p>{{ item.owner }}</p>
                 <img src='{{ item.photo.url }}' width='700' height='auto'>
            </div>
               <div class='message_comment'>

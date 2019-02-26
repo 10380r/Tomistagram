@@ -18,7 +18,6 @@ def index(request):
     # POST時
     # メッセージの取得
     messages = Message.objects.all()
-
     params = {
             'login_user' : request.user,
             'contents'   : messages,
@@ -109,7 +108,7 @@ def recommend(request):
     results = recommend_user(request.user)
     params = {
             'login_user' : request.user,
-            'results'    : results
+            'results'    : results,
             }
     return  render(request, 'app/recommend.html', params)
 

@@ -13,11 +13,14 @@
 {% endblock %}
 
 {% block content %}
+<div>
+  <p class='login_user'><a href='user_detail/{{ request.user.id }}'>{{ request.user }}</a></p>
+</div>
 {% for item in contents %}
 <hr>
   <div class='post_content'>
     <div class='message_owner_bar'>
-      <p class='message_owner'>{{item.owner}}</p>
+      <p class='message_owner'><a href='user_detail/{{ item.owner.id  }}'>{{item.owner}}</a></p>
     </div>
     <div class='img_content'>
       <img src='{{ item.photo.url }}' width='700' height='auto'>
