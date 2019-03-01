@@ -62,14 +62,6 @@ td {
 .post_content {
   text-align:center;
 }
-
-.message_owner {
-  text-align:left;
-}
-.message_comment {
-  text-align:left;
-}
-
 ul {
   list-style: none;
 }
