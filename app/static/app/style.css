@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
 header{
+  top: 0;
   width: 100%;
   height: 100px;
   background-color: #ffffff;
@@ -35,7 +36,7 @@ a:active { color: blue; } /*クリックしている時のリンクの色*/
 .login_user {
   font-size: 20px;
   text-align: right;
-  padding: 105px 71px 0px 70px;
+  padding: 105px 43px 0px 70px;
 }
 
 .recommend_user_table {
@@ -119,4 +120,20 @@ td {
 .like {
   font-size: 18px;
   margin-top: 8px;
+}
+
+.content {
+  font-size: 33px;
+  width: 80%;
+  margin-left: 10%
+}
+
+.tablecontent {
+  margin-left: 25%;
+}
+
+.recommend_user_table {
+  margin-top: 10%;
+  font-size: 33px;
+  text-align: left;
 }

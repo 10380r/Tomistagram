@@ -17,6 +17,7 @@
 {% endblock %}
 
 {% block content %}
+<div class='tablecontent'>
 <h4>Hello, {{ request.user }} </h4>
 <table class='recommend_user_table'>
   <tbody>
@@ -32,4 +33,5 @@
     {% endfor %}
   </tbody>
 </table>
+</div>
 {% endblock %}
