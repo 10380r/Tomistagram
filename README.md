@@ -12,8 +12,9 @@
 ### Usage
 
 ### Requirements
-`python 3.7.2`
-`django 2.1.5`
+`python 3.7.2`  
+`django 2.1.5`  
 
-### Refarances
-https://algorithm.joho.info/machine-learning/python-keras-cnn-vgg16
+### References
+https://keras.io/ja/applications/#vgg1://keras.io/ja/applications/#vgg16
+
