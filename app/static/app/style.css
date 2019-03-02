@@ -13,9 +13,16 @@ body {
   font-family: "Yu Gothic", "游ゴシック", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;
 }
 
+a {text-decoration: none;}
+a:hover {text-decoration: none;}
+a:link { color: black; } /*リンクの色*/
+a:visited { color: black; }/*訪問済みリンクの色*/
+a:hover { color: black; } /*マウスオン時のリンクの色*/
+a:active { color: blue; } /*クリックしている時のリンクの色*/
+
 .post_content {
-  margin-left:25%;
-  width:60%;
+  margin-left: 10%;
+  width: 80%;
 }
 
 .logo img {
@@ -28,11 +35,7 @@ body {
 .login_user {
   font-size: 20px;
   text-align: right;
-  padding: 78px 40px 0px 70px;
-}
-
-td {
-  align: left;
+  padding: 105px 71px 0px 70px;
 }
 
 .recommend_user_table {
@@ -74,4 +77,46 @@ ul{
   float: right;
   list-style: none;
   display:flex;
+}
+
+td {
+  align: left;
+}
+
+.message_content {
+  font-size: 20px;
+  margin-top: 16px;
+}
+
+.message_owner {
+  font-size: 25px;
+  margin-top: 40px;
+  margin-bottom: 5px;
+  margin-left: 20%;
+  text-align: left;
+}
+
+.message_comment {
+  text-align: left;
+  margin-left: 20%;
+}
+
+.message_accuracy {
+  font-size: 15px;
+  margin-top: 6px;
+}
+
+.message_subject {
+  font-size: 15px;
+  margin-top: 6px;
+}
+
+.message_date {
+  font-size: 15px;
+  margin-top: 6px;
+}
+
+.like {
+  font-size: 18px;
+  margin-top: 8px;
 }
