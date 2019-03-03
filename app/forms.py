@@ -28,7 +28,7 @@ class FriendsForm(forms.Form):
 
 class PostForm(forms.Form):
     photo   = forms.ImageField()
-    content = forms.CharField(max_length=500, widget=forms.Textarea)
+    content = forms.CharField(max_length=500,widget=forms.Textarea)
 
     class Meta:
         model = Message

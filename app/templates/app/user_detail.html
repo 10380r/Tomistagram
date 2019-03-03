@@ -5,11 +5,10 @@
   <p class='login_user'><a href='{{ request.user.id  }}'>{{ request.user }}</a></p>
 </div>
 <h2>{{ user.username }}</h2>
-  <div class='post_content'>
-    <div class='message_owner_bar'>
       {% for item in contents %}
         {% if item.owner == user %}
-        <div class='post_content'>
+  <div class='post_content_user'>
+    <div class='message_owner_bar'>
           <div class='img_content'>
                 <img src='{{ item.photo.url }}' width='700' height='auto'>
            </div>
@@ -20,8 +19,7 @@
                 </div>
                 <div class='comment>'>
                   <p class='message_content'>{{item.content}}</p>
-                  <p class='message_date'>{{item.pub_date}}</p>
-                  <hr>
+                  <p class='message_date_user'>{{item.pub_date}}</p>
             {% endif %}
       {% endfor %}
                 </div>
