@@ -1,6 +1,7 @@
 import numpy as np
 import pickle,django,os,sys
  # ローカルでmodelを扱えるようにする
+ # TODO: 任意のパスにするようにできないものか
 sys.path.append('/Users/tommy/src/develop/mimicstagram/mimicstagram/')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mimicstagram.settings')  # 自分のsettings.py
 django.setup()
@@ -20,7 +21,11 @@ def get_users():
     return users 
 
 def recommend_user(me):
-    my_dict       = get_pkl(me)
+    try:
+        my_dict = get_pkl(me)
+    except FileNotFoundError:
+        return None
+
     my_array      = np.fromiter(my_dict.values(), dtype=float)
     users         = get_users()
     recommend_users = []
@@ -50,7 +55,19 @@ def recommend_user(me):
             except FileNotFoundError:
                 print('"' + str(user) + '"', 'HAS NOT POSTED YET', '\n')
                 continue
+
     # 上位3人のみ取得
-    results = {user:sim for user,sim in recommend_users[:3]}
-    print('RECOMMEND DICT => ', results, '\n')
-    return results
+    # results = {user:sim for user,sim in recommend_users[:3]}
+    # Vue.jsに渡す関係で対応するarrayに変換
+    arrows = [{'from': me.id, 'to': user.id, 'arrows':'to'} for user,sim in recommend_users[:3]]
+#    arrows = [{'from': 1, 'to': 3, 'arrows':'to'}, {'from': 3, 'to': 7, 'arrows':'to'}]
+    print('ARROWS          => ', arrows, '\n')
+    return arrows
+
+def users_to_array():
+    users         = get_users()
+    recommend_users = []
+    # 類似しているユーザーを辞書にする
+    users  = [{'id': user.id, 'label':str(user)} for user in users]
+    print('RECOMMEND USERS => ', users, '\n')
+    return users

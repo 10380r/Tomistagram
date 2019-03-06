@@ -10,7 +10,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 import sys, os, pickle
 from .imagenet import imagenet
-from .recommend_user import recommend_user
+from .recommend_user import recommend_user, users_to_array, get_users
 
 # indexのビュー関数
 @login_required(login_url='/admin/login/')
@@ -105,10 +105,21 @@ def like(request, like_id):
 @login_required(login_url='/admin/login/')
 def recommend(request):
     # 類似度が近しいユーザの3人Dict
-    results = recommend_user(request.user)
+    _arrows = recommend_user(request.user)
+    arrows = []
+    for user in get_users():
+        result = recommend_user(user)
+        if result is None:
+            continue
+        for i in result:
+            arrows.append(i)
+    print(arrows)
+    users_array = users_to_array()
+    print(users_array)
     params = {
             'login_user' : request.user,
-            'results'    : results,
+            'users_array'      : users_array,
+            'arrows'     : arrows,
             }
     return  render(request, 'app/recommend.html', params)
 
