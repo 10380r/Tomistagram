@@ -60,8 +60,6 @@ def recommend_user(me):
     # results = {user:sim for user,sim in recommend_users[:3]}
     # Vue.jsに渡す関係で対応するarrayに変換
     arrows = [{'from': me.id, 'to': user.id, 'arrows':'to'} for user,sim in recommend_users[:3]]
-#    arrows = [{'from': 1, 'to': 3, 'arrows':'to'}, {'from': 3, 'to': 7, 'arrows':'to'}]
-    print('ARROWS          => ', arrows, '\n')
     return arrows
 
 def users_to_array():
@@ -69,5 +67,4 @@ def users_to_array():
     recommend_users = []
     # 類似しているユーザーを辞書にする
     users  = [{'id': user.id, 'label':str(user)} for user in users]
-    print('RECOMMEND USERS => ', users, '\n')
     return users

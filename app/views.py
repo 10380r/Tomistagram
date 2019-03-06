@@ -108,18 +108,18 @@ def recommend(request):
     _arrows = recommend_user(request.user)
     arrows = []
     for user in get_users():
-        result = recommend_user(user)
-        if result is None:
+        results = recommend_user(user)
+        if results is None:
             continue
-        for i in result:
-            arrows.append(i)
+        for result in results:
+            arrows.append(result)
     print(arrows)
     users_array = users_to_array()
     print(users_array)
     params = {
-            'login_user' : request.user,
-            'users_array'      : users_array,
-            'arrows'     : arrows,
+            'login_user'  : request.user,
+            'users_array' : users_array,
+            'arrows'      : arrows,
             }
     return  render(request, 'app/recommend.html', params)
 
