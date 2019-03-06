@@ -87,7 +87,7 @@ def like(request, like_id):
             .filter(message=like_msg).count()
     # いいね済みかどうか
     if is_like > 0:
-        messages.success(request, 'you were already liked.')
+        messages.success(request, 'You were already liked.')
         return redirect(to='/app')
 
     # いいねカウント
