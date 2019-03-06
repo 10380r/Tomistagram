@@ -69,6 +69,17 @@ a:active { color: blue; } /*クリックしている時のリンクの色*/
 
 .post_content {
   text-align: center;
+  font-size: 33px;
+  width: 80%;
+  margin-top: 60px;
+  margin-left: 10%;
+}
+
+.user_post_content {
+  width: 80%;
+  margin-top: 160px;
+  margin-left: 10%;
+
 }
 
 ul{
@@ -122,12 +133,6 @@ td {
   margin-top: 8px;
 }
 
-.content {
-  font-size: 33px;
-  width: 80%;
-  margin-left: 10%
-}
-
 .tablecontent {
   margin-left: 25%;
 }
@@ -136,4 +141,13 @@ td {
   margin-top: 10%;
   font-size: 33px;
   text-align: left;
+}
+
+.user_detail_content {
+  margin-top: 170px;
+}
+
+.username {
+  font-size: 25px;
+  margin-left: 10%;
 }
