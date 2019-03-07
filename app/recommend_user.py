@@ -7,36 +7,54 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mimicstagram.settings')  # 自�
 django.setup()
 from app.models import User
 
-
 def get_pkl(user):
+    '''
+    引数で渡されたユーザのpklを呼び出す
+    '''
     with open('pickles/%s.pkl' %(user), 'rb') as f:
         return pickle.load(f)
 
 def sim_cos(user1, user2):
+    '''
+    コサイン類似度を計算する
+    '''
     cos = np.dot(user1, user2.T) / (np.linalg.norm(user1) * np.linalg.norm(user2))
     return cos
 
 def get_users():
+    '''
+    全ユーザのリストを作成する
+    '''
     users = [user for user in User.objects.all()]
     return users 
 
 def recommend_user(me):
+    '''
+    全ユーザのコサイン類似度を算出し、レコメンドするユーザの配列を作成する
+    '''
+    # 一度も投稿したことがないユーザのハンドリング
     try:
         my_dict = get_pkl(me)
     except FileNotFoundError:
         return None
 
+    # 自身のplkを呼び出す
     my_array      = np.fromiter(my_dict.values(), dtype=float)
     users         = get_users()
     recommend_users = []
     # 類似しているユーザーを辞書にする
+#    users_array = [{'id': me.id, 'label':'You', 'mass': 4},]
     for user in users:
         # 自身の場合スキップ
         if user == me:
             continue
         else:
             try:
+                # ユーザのpklを呼び出す
                 user_dict  = get_pkl(user)
+                # 投稿したことがないユーザをフィルタリングして配列を作成
+#                users_array.append({'id': user.id, 'label':str(user), 'mass': 4})
+#                print(users_array)
                 user_array = np.fromiter(user_dict.values(), dtype=float)
                 similarity = sim_cos(my_array, user_array)
                 user_tuple = (user,similarity)
@@ -50,21 +68,37 @@ def recommend_user(me):
                         recommend_users.append(user_tuple)
                 # 類似度でソート
                 recommend_users = sorted(recommend_users, key=lambda x:x[1], reverse=True)
+                # デバッグ用の出力
                 print('SORTED =>', recommend_users, '\n')
             # 投稿したことがないユーザの場合の例外処理
             except FileNotFoundError:
                 print('"' + str(user) + '"', 'HAS NOT POSTED YET', '\n')
                 continue
 
-    # 上位3人のみ取得
-    # results = {user:sim for user,sim in recommend_users[:3]}
-    # Vue.jsに渡す関係で対応するarrayに変換
-    arrows = [{'from': me.id, 'to': user.id, 'arrows':'to'} for user,sim in recommend_users[:3]]
+    # 類似度が高いユーザの配列を作成。Vue.jsに渡すarray
+    arrows = [{'from': user.id, 'to': me.id, 'arrows':'to'} for user,sim in recommend_users[:3]]
     return arrows
 
-def users_to_array():
-    users         = get_users()
-    recommend_users = []
+def users_to_array(me):
+    '''
+    Vue.jsに対応した全ユーザの配列を作成する
+    '''
     # 類似しているユーザーを辞書にする
-    users  = [{'id': user.id, 'label':str(user)} for user in users]
+    users  = [{'id': user.id, 'label':str(user), 'mass': 2} for user in get_users()]
+#    users  = [{
+#        'id': user.id,
+#        'label':str(user),
+#        'mass': 4,
+#        'value': 40,
+#        'scaling': {
+#            'label': {'enabled': 'true'}
+#        }
+#    }]
+
+    for user in users:
+        # 自身の場合にユーザネームをMeに置換。スケールする
+        if user['id'] == me.id:
+            user['label'] = 'You'
+            user['value'] = 40
+            user['scaling'] = {'label': {'enabled': 'true'}}
     return users

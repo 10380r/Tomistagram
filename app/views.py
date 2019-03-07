@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Message, Friend, Like
-from .forms import FriendsForm, PostForm
+from .forms import PostForm
 from django.views import generic
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -98,24 +98,22 @@ def like(request, like_id):
     like.owner = request.user
     like.message = like_msg
     like.save()
-
     messages.success(request, 'Liked!')
     return redirect(to='/app')
 
 @login_required(login_url='/admin/login/')
 def recommend(request):
     # 類似度が近しいユーザの3人Dict
-    _arrows = recommend_user(request.user)
+#    arrows, users_array = recommend_user(request.user)
     arrows = []
     for user in get_users():
         results = recommend_user(user)
         if results is None:
             continue
         for result in results:
+            print(result)
             arrows.append(result)
-    print(arrows)
-    users_array = users_to_array()
-    print(users_array)
+    users_array = users_to_array(request.user)
     params = {
             'login_user'  : request.user,
             'users_array' : users_array,
@@ -133,3 +131,11 @@ def user_detail(request,id):
             'contents'   : user_contents,
             }
     return render(request, 'app/user_detail.html', params)
+
+#def has_post():
+#    users = get_users()
+#    user_contents = Message.objects.all()
+#    users_array = [{'id': me.id, 'label':'You', 'mass': 4, 'value': 40, 'scaling': {'label': {'enabled': 'true'}},]
+#    for  
+#        # 投稿したことがないユーザをフィルタリングして配列を作成
+#        users_array.append({'id': user.id, 'label':str(user), 'mass': 4})

@@ -7,21 +7,33 @@
 
 {% block content %}
 <div class='tablecontent'>
-<h4>Hello, {{ request.user }} </h4>
+  <h4>Hello, {{ request.user }} </h4>
 </div>
 <div class='user_network'>
-<div id="network"></div>
-<script type="text/javascript">
-  var nodes = new vis.DataSet({{ users_array |safe }});
-  var edges = new vis.DataSet({{ arrows |safe }});
-  var container = document.getElementById('network');
-  var data = {
-    nodes: nodes,
-    edges: edges
-  };
-  var options = {
-  };
-  var network = new vis.Network(container, data, options);
-</script>
+  <div id="network"></div>
+    <script type="text/javascript">
+      var nodes = new vis.DataSet({{ users_array |safe }});
+      var edges = new vis.DataSet({{ arrows |safe }});
+      var container = document.getElementById('network');
+      var data = {
+        nodes: nodes,
+        edges: edges
+      };
+      var options = {
+        nodes: {
+          shape: 'box',
+          size: 70,
+          color: '#ffffff',
+          font: {
+            size: 23,
+          },
+        },
+        edges: {
+          length: 600,
+        },
+      };
+      var network = new vis.Network(container, data, options);
+    </script>
+  </div>
 </div>
 {% endblock %}
