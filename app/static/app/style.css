@@ -76,9 +76,9 @@ a:active { color: blue; } /*クリックしている時のリンクの色*/
 }
 
 .user_post_content {
-  width: 80%;
+  width: 30%;
   margin-top: 160px;
-  margin-left: 10%;
+  margin-left: 35%;
 
 }
 
@@ -152,7 +152,12 @@ td {
   margin-left: 10%;
 }
 
-.network{
-  width: 100%;
-  height: 70%;
+.user_network {
+  margin-top: 15%
+}
+
+#network {
+  margin-left: 5%;
+  width: 1000px;
+  height: 400px;
 }

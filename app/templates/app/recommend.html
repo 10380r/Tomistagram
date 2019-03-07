@@ -20,6 +20,7 @@
         edges: edges
       };
       var options = {
+        physics: false,
         nodes: {
           shape: 'box',
           size: 70,
@@ -29,7 +30,13 @@
           },
         },
         edges: {
-          length: 600,
+          length: 5000,
+          color: {
+            color: '#898a8c'
+          },
+          smooth: {
+            type: 'dynamic',
+          }
         },
       };
       var network = new vis.Network(container, data, options);
