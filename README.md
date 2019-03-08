@@ -4,14 +4,14 @@
 
 ## Preview
 ### Index pages
-[Imgur](https://i.imgur.com/UN5p3N9.gifv)
+![Imgur](https://i.imgur.com/UN5p3N9.gifv)
 
 ### Post Image
-[Imgur](https://i.imgur.com/YhWezYq.gifv)
+![Imgur](https://i.imgur.com/YhWezYq.gifv)
 
 ### Recommend Users
-The most important feature is user base filtering from the user's posted image and recommends similar users
-[Imgur](https://i.imgur.com/b7sowfW.png)
+The most important feature is user base filtering from the user's posted image and recommends similar users  
+![Imgur](https://i.imgur.com/b7sowfW.png)
 
 ### Description
 - Create SNS with Django
