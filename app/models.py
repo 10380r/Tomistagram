@@ -24,7 +24,7 @@ class Friend(models.Model):
     user    = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return '%s (%s)' %(self.user, self.group)
+        return '%s (%s)' %(self.user)
 
 class Like(models.Model):
     owner   = models.ForeignKey(User, on_delete=models.CASCADE,\
