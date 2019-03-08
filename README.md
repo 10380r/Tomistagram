@@ -11,9 +11,9 @@
 
 ## Preview
 ### Index pages
-![Imgur](https://i.imgur.com/UN5p3N9.gif)
-`Imagenet inference` is Inference result of vgg16
-`Probability` is Probability of the above inference
+![Imgur](https://i.imgur.com/UN5p3N9.gif)  
+`Imagenet inference` is Inference result of vgg16  
+`Probability` is Probability of the above inference  
 
 ### Post Image
 ![Imgur](https://i.imgur.com/YhWezYq.gif)
@@ -40,7 +40,7 @@ login at [admin page](http://localhost:8000/admin)
 Then, you can try sns. at http://localhost:8000/app
 
 ### Requirements
-See [reqirements.txt](https://github.com/10380r/Mimic-Instagram/blob/master/requirements.txt) for details
+See [reqirements.txt](https://github.com/10380r/Mimic-Instagram/blob/master/requirements.txt) for details  
 `python 3.7.2`  
 `django 2.1.5`  
 `Mac OS Mojave 10.14.3` (I am trying to execute it only on this OS)  
