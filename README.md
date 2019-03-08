@@ -21,15 +21,15 @@ The most important feature is user base filtering from the user's posted image a
 ![Imgur](https://i.imgur.com/b7sowfW.png)
 
 ### Usage
-`$ mkdir <YOUR DIR> && cd <YOUR DIR>`
-`$ python -m venv venv`
-`$ source venv/bin/activate`
-`$ git clone git@github.com:10380r/Mimic-Instagram.git`
-`$ cd Mimic-Instagram`
-`$ pip install -r requirements.txt`
-`$ ./manage.py migrate`
-`$ ./manage.py createsuperuser`
-`$ ./manage.py runserver`
+`$ mkdir <YOUR DIR> && cd <YOUR DIR>`  
+`$ python -m venv venv`  
+`$ source venv/bin/activate`  
+`$ git clone git@github.com:10380r/Mimic-Instagram.git`  
+`$ cd Mimic-Instagram`  
+`$ pip install -r requirements.txt`  
+`$ ./manage.py migrate`  
+`$ ./manage.py createsuperuser`  
+`$ ./manage.py runserver`  
 
 login at [admin page](http://localhost:8000/admin)
   - create users
