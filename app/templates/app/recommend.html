@@ -1,4 +1,4 @@
-{% extends 'app/layout.html' %}
+{% extends "app/layout.html" %}
 
 {% block title %} Recommend For You {% endblock %}
 
@@ -6,15 +6,34 @@
 {% endblock %}
 
 {% block content %}
-<div class='tablecontent'>
-  <h4>Hello, {{ request.user }} </h4>
+<div class='recommend_content'>
+  <div class="tablecontent">
+    <h4>Hello, {{ request.user }} </h4>
+  </div>
+  <div class='recommend_table'>
+    <table cellspacing="10" class="recommend_user_table" >
+      <tbody>
+        <tr>
+          <th>USERNAME</th>
+          <th>SIMILARITY</th>
+        </tr>
+        {% for result_user,result_pred in results.items %}
+        <tr>
+          <td class="user_recommend"><a href="user_detail/{{ result_user.id }}">{{ result_user }}</a></td>
+          <td>{{ result_pred.0 }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
-<div class='user_network'>
+
+<div class="user_network">
   <div id="network"></div>
     <script type="text/javascript">
       var nodes = new vis.DataSet({{ users_array |safe }});
       var edges = new vis.DataSet({{ arrows |safe }});
-      var container = document.getElementById('network');
+      var container = document.getElementById("network");
       var data = {
         nodes: nodes,
         edges: edges
@@ -22,9 +41,9 @@
       var options = {
         physics: false,
         nodes: {
-          shape: 'box',
+          shape: "box",
           size: 70,
-          color: '#ffffff',
+          color: "#bfe1ff",
           font: {
             size: 23,
           },
@@ -32,10 +51,10 @@
         edges: {
           length: 5000,
           color: {
-            color: '#898a8c'
+            color: "#898a8c"
           },
           smooth: {
-            type: 'dynamic',
+            type: "dynamic",
           }
         },
       };

@@ -103,21 +103,21 @@ def like(request, like_id):
 
 @login_required(login_url='/admin/login/')
 def recommend(request):
-    # 類似度が近しいユーザの3人Dict
-#    arrows, users_array = recommend_user(request.user)
+    # 類似度が近しいユーザの3人のDict
     arrows = []
     for user in get_users():
         results = recommend_user(user)
+        # 投稿がない場合はNoneが返ってくる
         if results is None:
             continue
-        for result in results:
-            print(result)
-            arrows.append(result)
+        for result in results.items():
+            arrows.append({'from': result[0].id, 'to': result[1][1].id, 'arrows':'to'})
     users_array = users_to_array(request.user)
     params = {
             'login_user'  : request.user,
             'users_array' : users_array,
             'arrows'      : arrows,
+            'results'     : recommend_user(request.user)
             }
     return  render(request, 'app/recommend.html', params)
 
@@ -131,11 +131,3 @@ def user_detail(request,id):
             'contents'   : user_contents,
             }
     return render(request, 'app/user_detail.html', params)
-
-#def has_post():
-#    users = get_users()
-#    user_contents = Message.objects.all()
-#    users_array = [{'id': me.id, 'label':'You', 'mass': 4, 'value': 40, 'scaling': {'label': {'enabled': 'true'}},]
-#    for  
-#        # 投稿したことがないユーザをフィルタリングして配列を作成
-#        users_array.append({'id': user.id, 'label':str(user), 'mass': 4})

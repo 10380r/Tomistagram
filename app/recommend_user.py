@@ -43,7 +43,6 @@ def recommend_user(me):
     users         = get_users()
     recommend_users = []
     # 類似しているユーザーを辞書にする
-#    users_array = [{'id': me.id, 'label':'You', 'mass': 4},]
     for user in users:
         # 自身の場合スキップ
         if user == me:
@@ -53,8 +52,6 @@ def recommend_user(me):
                 # ユーザのpklを呼び出す
                 user_dict  = get_pkl(user)
                 # 投稿したことがないユーザをフィルタリングして配列を作成
-#                users_array.append({'id': user.id, 'label':str(user), 'mass': 4})
-#                print(users_array)
                 user_array = np.fromiter(user_dict.values(), dtype=float)
                 similarity = sim_cos(my_array, user_array)
                 user_tuple = (user,similarity)
@@ -76,8 +73,9 @@ def recommend_user(me):
                 continue
 
     # 類似度が高いユーザの配列を作成。Vue.jsに渡すarray
-    arrows = [{'from': user.id, 'to': me.id, 'arrows':'to'} for user,sim in recommend_users[:3]]
-    return arrows
+    #arrows = [{'from': user.id, 'to': me.id, 'arrows':'to'} for user,sim in recommend_users[:3]]
+    results = {user:[sim, me] for user,sim in recommend_users[:3]}
+    return results
 
 def users_to_array(me):
     '''
@@ -85,16 +83,6 @@ def users_to_array(me):
     '''
     # 類似しているユーザーを辞書にする
     users  = [{'id': user.id, 'label':str(user), 'mass': 2} for user in get_users()]
-#    users  = [{
-#        'id': user.id,
-#        'label':str(user),
-#        'mass': 4,
-#        'value': 40,
-#        'scaling': {
-#            'label': {'enabled': 'true'}
-#        }
-#    }]
-
     for user in users:
         # 自身の場合にユーザネームをMeに置換。スケールする
         if user['id'] == me.id:
