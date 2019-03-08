@@ -136,7 +136,7 @@ td {
 
 .tablecontent {
   margin-top: 140px;
-  margin-bottom: 50px;
+  margin-bottom: 33px;
   margin-left: 40%;
 }
 
@@ -171,4 +171,9 @@ canvas {
 
 .recommend_table {
   margin-left: 33%;
+}
+
+.recommend_message {
+  margin-bottom: 19px;
+  margin-left: 8%;
 }

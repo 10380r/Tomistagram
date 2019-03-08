@@ -82,7 +82,9 @@ def users_to_array(me):
     Vue.jsに対応した全ユーザの配列を作成する
     '''
     # 類似しているユーザーを辞書にする
-    users  = [{'id': user.id, 'label':str(user), 'mass': 2} for user in get_users()]
+    # TODO: vueで表示されるユーザネームをリンクテキストにしたい
+    # '<a href="user_detail/%s">%s</a>' %(user.id, str(user))
+    users  = [{'id': user.id, 'label': str(user), 'mass': 2} for user in get_users()]
     for user in users:
         # 自身の場合にユーザネームをMeに置換。スケールする
         if user['id'] == me.id:
