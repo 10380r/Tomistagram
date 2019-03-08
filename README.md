@@ -4,10 +4,10 @@
 
 ## Preview
 ### Index pages
-![Imgur](https://i.imgur.com/UN5p3N9.gifv)
+![Imgur](https://i.imgur.com/UN5p3N9.gif)
 
 ### Post Image
-![Imgur](https://i.imgur.com/YhWezYq.gifv)
+![Imgur](https://i.imgur.com/YhWezYq.gif)
 
 ### Recommend Users
 The most important feature is user base filtering from the user's posted image and recommends similar users  
