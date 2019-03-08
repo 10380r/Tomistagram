@@ -1,6 +1,6 @@
 /media
 db.sqlite3
-pickles
+pickles/*.pkl
 .DS_Store
 markup
 t
