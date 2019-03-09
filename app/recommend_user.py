@@ -2,10 +2,10 @@ import numpy as np
 import pickle,django,os,sys
  # ローカルでmodelを扱えるようにする
  # TODO: 任意のパスにするようにできないものか
-sys.path.append('/Users/tommy/src/develop/mimicstagram/mimicstagram/')
+sys.path.append(os.path.abspath('../'))
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mimicstagram.settings')  # 自分のsettings.py
 django.setup()
-from app.models import User
+from app.models import User, Message
 
 def get_pkl(user):
     '''
@@ -25,7 +25,12 @@ def get_users():
     '''
     全ユーザのリストを作成する
     '''
+    user_contents = Message.objects.all()
     users = [user for user in User.objects.all()]
+    has_posted_users = []
+    for user in user_contents:
+        if user.owner in users:
+            print(user)
     return users 
 
 def recommend_user(me):
@@ -73,7 +78,6 @@ def recommend_user(me):
                 continue
 
     # 類似度が高いユーザの配列を作成。Vue.jsに渡すarray
-    #arrows = [{'from': user.id, 'to': me.id, 'arrows':'to'} for user,sim in recommend_users[:3]]
     results = {user:[sim, me] for user,sim in recommend_users[:3]}
     return results
 
@@ -81,6 +85,7 @@ def users_to_array(me):
     '''
     Vue.jsに対応した全ユーザの配列を作成する
     '''
+    get_users()
     # 類似しているユーザーを辞書にする
     # TODO: vueで表示されるユーザネームをリンクテキストにしたい
     # '<a href="user_detail/%s">%s</a>' %(user.id, str(user))
