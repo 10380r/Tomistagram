@@ -1,7 +1,6 @@
 /media
 db.sqlite3
 pickles/*
-!.gitkeep
 .DS_Store
 markup
 t
