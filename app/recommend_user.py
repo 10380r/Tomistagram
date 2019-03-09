@@ -1,9 +1,9 @@
 import numpy as np
 import pickle,django,os,sys
+
  # ローカルでmodelを扱えるようにする
- # TODO: 任意のパスにするようにできないものか
 sys.path.append(os.path.abspath('../'))
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mimicstagram.settings')  # 自分のsettings.py
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mimicstagram.settings')
 django.setup()
 from app.models import User, Message
 
@@ -85,7 +85,9 @@ def users_to_array(me):
     '''
     Vue.jsに対応した全ユーザの配列を作成する
     '''
+    # TODO: 仮で関数呼び出し
     get_users()
+
     # 類似しているユーザーを辞書にする
     # TODO: vueで表示されるユーザネームをリンクテキストにしたい
     # '<a href="user_detail/%s">%s</a>' %(user.id, str(user))

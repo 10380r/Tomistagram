@@ -42,32 +42,33 @@ def post(request):
             msg.save()
             results_dic = {obj:pred for ctg,obj,pred in imagenet_results}
 
+            user_pkl_filepath = 'pickles/%s.pkl' %(msg.owner)
+            # ファイルが存在する場合
+            if os.path.isfile(user_pkl_filepath):
+                # 現存ファイルを読み込み、Dictを書き換える
+                with open(user_pkl_filepath, 'rb') as f:
+                    user_results = pickle.load(f)
+                    # 現存dictとカラムに重複があった場合に値を足し、存在しない場合は新規追加する
+                    for obj,pred in results_dic.items():
+                        if obj in user_results.keys():
+                            user_results[obj] += pred
+                        else:
+                            user_results[obj] = pred
+                # ファイル保存
+                with open(user_pkl_filepath, 'wb') as f:
+                    pickle.dump(user_results, f)
+
+            # 初投稿の場合
+            else:
+                with open(user_pkl_filepath, 'wb') as f:
+                    pickle.dump(results_dic, f)
+
+            return redirect(to='/app')
+
         #TODO 結局エラーメッセージが画面に出力される。画面を遷移させるには新しいviewを作らないと(実装未定)
         except TypeError:
             messages.success(request, 'Sorry, something to wrong. Try again...')
 
-        user_pkl_filepath = 'pickles/%s.pkl' %(msg.owner)
-        # ファイルが存在する場合
-        if os.path.isfile(user_pkl_filepath):
-            # 現存ファイルを読み込み、Dictを書き換える
-            with open(user_pkl_filepath, 'rb') as f:
-                user_results = pickle.load(f)
-                # 現存dictとカラムに重複があった場合に値を足し、存在しない場合は新規追加する
-                for obj,pred in results_dic.items():
-                    if obj in user_results.keys():
-                        user_results[obj] += pred
-                    else:
-                        user_results[obj] = pred
-            # ファイル保存
-            with open(user_pkl_filepath, 'wb') as f:
-                pickle.dump(user_results, f)
-
-        # 初投稿の場合
-        else:
-            with open(user_pkl_filepath, 'wb') as f:
-                pickle.dump(results_dic, f)
-
-        return redirect(to='/app')
     # GET時
     else:
         form = PostForm()
