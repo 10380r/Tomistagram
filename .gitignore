@@ -4,4 +4,6 @@ pickles/*
 .DS_Store
 markup
 t
-app/templates/app/recommend.html.bak
+*.pyc
+*.pyo
+__pycache__
