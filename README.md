@@ -15,22 +15,24 @@ Next, calculate the similarity between users based on the label, and recommend u
 
  > VGG16というのは，「ImageNet」と呼ばれる大規模画像データセットで学習された，16層からなるCNNモデルのことです．2014年に発表されました．  
  > 様々な研究で利用されている，有名な学習済みモデルの1つです
->
+
+
 ## Preview
-### Index pages
-![Imgur](https://i.imgur.com/yrTnLXI.gif)  
-`Imagenet inference` is Inference result of vgg16  
-`Probability` is Probability of the above inference  
-
-### Post Image
-![Imgur](https://i.imgur.com/DVe92po.gif)  
-
-### Recommend Users
-The most important feature is user base filtering from the user's posted image and recommends similar users  
-![Imgur](https://i.imgur.com/b7sowfW.png)  
-
-### User page
-![Imgur](https://i.imgur.com/a6e9nGa.png)
+  ### Index pages
+  ![Imgur](https://i.imgur.com/yrTnLXI.gif)  
+  `Imagenet inference` is Inference result of vgg16  
+  `Probability` is Probability of the above inference  
+  
+  
+  ### Post Image
+  ![Imgur](https://i.imgur.com/DVe92po.gif)  
+  
+  ### Recommend Users
+  The most important feature is user base filtering from the user's posted image and recommends similar users  
+  ![Imgur](https://i.imgur.com/b7sowfW.png)  
+  
+  ### User page
+  ![Imgur](https://i.imgur.com/a6e9nGa.png)
 
 ### Setup
 `$ mkdir <YOUR DIR> && cd <YOUR DIR>`  
