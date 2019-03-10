@@ -1,4 +1,4 @@
-# Mimic-Instagram
+# Tomistagram
 
 ## Create an application that is not ashamed to show to people as a portfolio.
 
