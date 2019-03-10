@@ -29,10 +29,6 @@ The most important feature is user base filtering from the user's posted image a
 `$ git clone git@github.com:10380r/Mimic-Instagram.git`  
 `$ cd Mimic-Instagram`  
 `$ pip install -r requirements.txt`  
-Rewrite  
-https://github.com/10380r/Mimic-
-Instagram/blob/ebe7eb0c48ccba39c4ab40b6f56e797b9b8a5e24/app/recommend_user.py#L5  
-to Path to Mimic-Instagram  
 `$ ./manage.py migrate`  
 `$ ./manage.py createsuperuser`  
 `$ ./manage.py runserver`  
