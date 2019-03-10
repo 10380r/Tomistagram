@@ -99,3 +99,7 @@ def users_to_array(me):
             user['value'] = 40
             user['scaling'] = {'label': {'enabled': 'true'}}
     return users
+
+def users_for_vue(user):
+    recommend_user(user)
+    users_for_vue(user)

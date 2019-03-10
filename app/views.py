@@ -40,6 +40,7 @@ def post(request):
             msg.img_acc      = imagenet_results[0][2]
             msg.content      = request.POST['content']
             msg.save()
+            # 推論結果の情報のDictを作成
             results_dic = {obj:pred for ctg,obj,pred in imagenet_results}
 
             user_pkl_filepath = 'pickles/%s.pkl' %(msg.owner)
@@ -48,7 +49,7 @@ def post(request):
                 # 現存ファイルを読み込み、Dictを書き換える
                 with open(user_pkl_filepath, 'rb') as f:
                     user_results = pickle.load(f)
-                    # 現存dictとカラムに重複があった場合に値を足し、存在しない場合は新規追加する
+                    # 現存dictのkeysで重複するカラムがあった場合に値を足し、存在しない場合は新規追加する
                     for obj,pred in results_dic.items():
                         if obj in user_results.keys():
                             user_results[obj] += pred
@@ -58,14 +59,14 @@ def post(request):
                 with open(user_pkl_filepath, 'wb') as f:
                     pickle.dump(user_results, f)
 
-            # 初投稿の場合
+            # 初投稿の場合 pklファイルを新規作成する
             else:
                 with open(user_pkl_filepath, 'wb') as f:
                     pickle.dump(results_dic, f)
 
             return redirect(to='/app')
 
-        #TODO 結局エラーメッセージが画面に出力される。画面を遷移させるには新しいviewを作らないと(実装未定)
+        #TODO 結局エラーメッセージが画面に出力される。画面を遷移させるには新しいviewを作らないと(実装未定)(もしくはリダイレクトさせたい)
         except TypeError:
             messages.success(request, 'Sorry, something to wrong. Try again...')
 
@@ -77,6 +78,7 @@ def post(request):
             'login_user' : request.user,
             'form'       : form,
             }
+
     return render(request, 'app/post.html', params)
 
 
@@ -84,9 +86,8 @@ def post(request):
 def like(request, like_id):
     # いいねするメッセージを取得
     like_msg = Message.objects.get(id=like_id)
-    is_like  = Like.objects.filter(owner=request.user) \
-            .filter(message=like_msg).count()
-    # いいね済みかどうか
+    is_like  = Like.objects.filter(owner=request.user).filter(message=like_msg).count()
+    # いいね済みかどうかを判定させる
     if is_like > 0:
         messages.success(request, 'You were already liked.')
         return redirect(to='/app')
@@ -95,11 +96,12 @@ def like(request, like_id):
     like_msg.like_count += 1
     like_msg.save()
     # いいねを作成
-    like = Like()
-    like.owner = request.user
+    like         = Like()
+    like.owner   = request.user
     like.message = like_msg
     like.save()
     messages.success(request, 'Liked!')
+
     return redirect(to='/app')
 
 @login_required(login_url='/admin/login/')
@@ -112,6 +114,7 @@ def recommend(request):
         if results is None:
             continue
         for result in results.items():
+            # vueに都合のいい配列の形に整形
             arrows.append({'from': result[0].id, 'to': result[1][1].id, 'arrows':'to'})
     users_array = users_to_array(request.user)
     params = {
@@ -120,15 +123,19 @@ def recommend(request):
             'arrows'      : arrows,
             'results'     : recommend_user(request.user)
             }
+
     return  render(request, 'app/recommend.html', params)
 
 @login_required(login_url='/admin/login/')
 def user_detail(request,id):
+    # 全投稿情報を取得
     user_contents = Message.objects.all()
+    # 全ユーザオブジェクトを取得
     user          = User.objects.get(id=id)
     params = {
             'login_user' : request.user,
             'user'       : user,
             'contents'   : user_contents,
             }
+
     return render(request, 'app/user_detail.html', params)
