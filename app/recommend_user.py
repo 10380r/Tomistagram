@@ -80,7 +80,7 @@ def users_to_array(me):
     # '<a href="user_detail/%s">%s</a>' %(user.id, str(user))
 
     # 類似ユーザーの類似ユーザーまで取得
-    results = []
+    results = [{'id': me.id, 'label': 'You', 'mass': 10}]
     for me,users in users_for_vue(me).items():
         if me.id not in [dict['id'] for dict in results]:
             results.append({'id': me.id, 'label': str(me), 'mass': 2})
@@ -88,9 +88,13 @@ def users_to_array(me):
             if user.id not in [dict['id'] for dict in results]:
                 results.append({'id': user.id, 'label': str(user), 'mass': 2})
 
+
     return results
 
 def users_for_vue(me):
+    '''
+    類似ユーザの類似ユーザまでを計算する
+    '''
     results = recommend_user(me)
     sim_users = {}
     for r_user,detail in results.items():
