@@ -5,9 +5,9 @@
 ### Description
 - Create SNS with Django
   - Instagram tribute
-- Upload image
 - Labeling posted images using vgg16
 - Compute similarity of user's tastes based on posted images, implement user's recommendation
+- Acquire similar users of similar users and draw network diagrams
 
 ## Preview
 ### Index pages
@@ -30,7 +30,8 @@ The most important feature is user base filtering from the user's posted image a
 `$ cd Mimic-Instagram`  
 `$ pip install -r requirements.txt`  
 Rewrite  
-https://github.com/10380r/Mimic-Instagram/blob/ebe7eb0c48ccba39c4ab40b6f56e797b9b8a5e24/app/recommend_user.py#L5  
+https://github.com/10380r/Mimic-
+Instagram/blob/ebe7eb0c48ccba39c4ab40b6f56e797b9b8a5e24/app/recommend_user.py#L5  
 to Path to Mimic-Instagram  
 `$ ./manage.py migrate`  
 `$ ./manage.py createsuperuser`  
@@ -38,7 +39,7 @@ to Path to Mimic-Instagram
 
 login at [admin page](http://localhost:8000/admin)
   - create users
-  > _Notes: When entering User information, change the permission to Staff status. Also select Choose all for User permission._
+    > _Notes: When entering User information, change the permission to Staff status. Also select Choose all for User permission._
 
 Then, you can try sns. at http://localhost:8000/app
 
