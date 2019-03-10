@@ -18,20 +18,20 @@ Next, calculate the similarity between users based on the label, and recommend u
 
 
 ## Preview
-  ### Index pages
+  ##### Index pages
   ![Imgur](https://i.imgur.com/yrTnLXI.gif)  
   `Imagenet inference` is Inference result of vgg16  
   `Probability` is Probability of the above inference  
   
   
-  ### Post Image
+  ##### Post Image
   ![Imgur](https://i.imgur.com/DVe92po.gif)  
   
-  ### Recommend Users
+  ##### Recommend Users
   The most important feature is user base filtering from the user's posted image and recommends similar users  
   ![Imgur](https://i.imgur.com/b7sowfW.png)  
   
-  ### User page
+  ##### User page
   ![Imgur](https://i.imgur.com/a6e9nGa.png)
 
 ### Setup
