@@ -11,12 +11,12 @@
 
 ## Preview
 ### Index pages
-![Imgur](https://i.imgur.com/yrTnLXI.gifv)  
+![Imgur](https://i.imgur.com/yrTnLXI.gif)  
 `Imagenet inference` is Inference result of vgg16  
 `Probability` is Probability of the above inference  
 
 ### Post Image
-![Imgur](https://i.imgur.com/DVe92po.gifv)  
+![Imgur](https://i.imgur.com/DVe92po.gif)  
 
 ### Recommend Users
 The most important feature is user base filtering from the user's posted image and recommends similar users  
