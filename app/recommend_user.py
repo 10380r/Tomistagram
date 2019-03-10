@@ -25,12 +25,7 @@ def get_users():
     '''
     全ユーザのリストを作成する
     '''
-    user_contents = Message.objects.all()
     users = [user for user in User.objects.all()]
-    has_posted_users = []
-    for user in user_contents:
-        if user.owner in users:
-            print(user)
     return users 
 
 def recommend_user(me):
@@ -44,8 +39,8 @@ def recommend_user(me):
         return None
 
     # 自身のplkを呼び出す
-    my_array      = np.fromiter(my_dict.values(), dtype=float)
-    users         = get_users()
+    my_array        = np.fromiter(my_dict.values(), dtype=float)
+    users           = get_users()
     recommend_users = []
     # 類似しているユーザーを辞書にする
     for user in users:
@@ -63,43 +58,41 @@ def recommend_user(me):
                 # 先頭3人をトップ３と仮に置く
                 if len(recommend_users) < 3:
                     recommend_users.append(user_tuple)
-                    print('ADDED => ', recommend_users, '\n')
                 # 3位と比較して大きいようならDictに追加
                 else:
                     if recommend_users[2][1] < similarity:
                         recommend_users.append(user_tuple)
                 # 類似度でソート
                 recommend_users = sorted(recommend_users, key=lambda x:x[1], reverse=True)
-                # デバッグ用の出力
-                print('SORTED =>', recommend_users, '\n')
             # 投稿したことがないユーザの場合の例外処理
             except FileNotFoundError:
-                print('"' + str(user) + '"', 'HAS NOT POSTED YET', '\n')
                 continue
 
     # 類似度が高いユーザの配列を作成。Vue.jsに渡すarray
-    results = {user:[sim, me] for user,sim in recommend_users[:3]}
+    results = {user:[sim, me.id] for user,sim in recommend_users[:3]}
     return results
 
 def users_to_array(me):
     '''
     Vue.jsに対応した全ユーザの配列を作成する
     '''
-    # TODO: 仮で関数呼び出し
-    get_users()
-
-    # 類似しているユーザーを辞書にする
     # TODO: vueで表示されるユーザネームをリンクテキストにしたい
     # '<a href="user_detail/%s">%s</a>' %(user.id, str(user))
-    users  = [{'id': user.id, 'label': str(user), 'mass': 2} for user in get_users()]
-    for user in users:
-        # 自身の場合にユーザネームをMeに置換。スケールする
-        if user['id'] == me.id:
-            user['label'] = 'You'
-            user['value'] = 40
-            user['scaling'] = {'label': {'enabled': 'true'}}
-    return users
 
-def users_for_vue(user):
-    recommend_user(user)
-    users_for_vue(user)
+    # 類似ユーザーの類似ユーザーまで取得
+    results = []
+    for me,users in users_for_vue(me).items():
+        if me.id not in [dict['id'] for dict in results]:
+            results.append({'id': me.id, 'label': str(me), 'mass': 2})
+        for user in users:
+            if user.id not in [dict['id'] for dict in results]:
+                results.append({'id': user.id, 'label': str(user), 'mass': 2})
+
+    return results
+
+def users_for_vue(me):
+    results = recommend_user(me)
+    sim_users = {}
+    for r_user,detail in results.items():
+        sim_users[r_user] = recommend_user(r_user).keys()
+    return sim_users

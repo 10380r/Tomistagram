@@ -115,7 +115,7 @@ def recommend(request):
             continue
         for result in results.items():
             # vueに都合のいい配列の形に整形
-            arrows.append({'from': result[0].id, 'to': result[1][1].id, 'arrows':'to'})
+            arrows.append({'from': result[0].id, 'to': result[1][1], 'arrows':'to'})
     users_array = users_to_array(request.user)
     params = {
             'login_user'  : request.user,
