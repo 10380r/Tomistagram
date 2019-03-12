@@ -108,7 +108,6 @@ def like(request, like_id):
 def recommend(request):
     # 類似度が近しいユーザの3人のDict
     arrows = []
-    i = 50
     for user in get_users():
         results = recommend_user(user)
         # 投稿がない場合はNoneが返ってくる
@@ -116,8 +115,7 @@ def recommend(request):
             continue
         for result in results.items():
             # vueに都合のいい配列の形に整形
-            arrows.append({'from': result[0].id, 'to': result[1][1], 'arrows':'to', 'length':i})
-            i *= 2
+            arrows.append({'from': result[0].id, 'to': result[1][1], 'arrows':'to'})
     users_array = users_to_array(request.user)
     params = {
             'login_user'  : request.user,
