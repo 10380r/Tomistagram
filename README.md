@@ -3,16 +3,16 @@
 ## Create an application that is not ashamed to show to people as a portfolio.
 
 ### Description
-This application is a **Matching SNS** created based on Instagram UI
-Label the image posted by the user with vgg16.  
-Next, calculate the similarity between users based on the label, and recommend users in order of similarity.  
-
+- This application is a **Matching SNS** created based on Instagram UI
+- Label the image posted by the user with vgg16.  
+- Create a user feature vector based on the label.  
+- Calculate cosine similarity between users from user feature vectors and recommend users with high similarity.  
 > VGG 16 is a 16-layer CNN model learned with a large-scale image dataset called "ImageNet." It was announced in 2014. It is a famous It is one of the learned models  
 
 - このアプリケーションは、インスタグラムのUIをベースに作られた**マッチング系SN**Sです。  
 - ユーザーが投稿した画像に対して、vgg16でラベル付けをします。  
-- 次に、ラベルを元にユーザ同士の類似度を計算して、類似度順にユーザをレコメンドします。  
-
+- そのラベルを元にユーザー特徴ベクトルを作成する。
+- ユーザー特徴ベクトルからユーザー間のコサイン類似度を計算し、類似度が高いユーザーをレコメンドする  
  > VGG16というのは，「ImageNet」と呼ばれる大規模画像データセットで学習された，16層からなるCNNモデルのことです．2014年に発表されました．  
  > 様々な研究で利用されている，有名な学習済みモデルの1つです
 
