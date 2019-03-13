@@ -43,7 +43,7 @@ def post(request):
             # 推論結果の情報のDictを作成
             results_dic = {obj:pred for ctg,obj,pred in imagenet_results}
 
-            user_pkl_filepath = 'pickles/%s.pkl' %(msg.owner)
+            user_pkl_filepath = 'media/pkls/%s.pkl' %(msg.owner)
             # ファイルが存在する場合
             if os.path.isfile(user_pkl_filepath):
                 # 現存ファイルを読み込み、Dictを書き換える

@@ -11,7 +11,7 @@ def get_pkl(user):
     '''
     引数で渡されたユーザのpklを呼び出す
     '''
-    with open('pickles/%s.pkl' %(user), 'rb') as f:
+    with open('media/pkls/%s.pkl' %(user), 'rb') as f:
         return pickle.load(f)
 
 def sim_cos(user1, user2):
