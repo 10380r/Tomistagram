@@ -23,7 +23,7 @@
 ## Preview
   #### Index pages
   The information posted by the user is listed as a timeline.
-  <img src="https://i.imgur.com/yrTnLXI.gif" alt="index" style="max-width:100% width:90% margin-left:5%;">
+  ![Imgur](https://i.imgur.com/yrTnLXI.gif)  
   `Imagenet inference` is Inference result of VGG16  
   `Probability` is Probability of the above inference  
   
