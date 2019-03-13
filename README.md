@@ -10,6 +10,7 @@
 > VGG 16 is a 16-layer CNN model learned with a large-scale image dataset called "ImageNet." It was announced in 2014. It is a famous It is one of the learned models  
 
 <br>
+
 - このアプリケーションは、インスタグラムのUIをベースに作られた**マッチング系SN**Sです。  
 - ユーザーが投稿した画像に対して、VGG16でラベル付けをします。  
 - そのラベルを元にユーザー特徴ベクトルを作成する。
