@@ -81,7 +81,6 @@ def post(request):
 
     return render(request, 'app/post.html', params)
 
-
 @login_required(login_url='/admin/login/')
 def like(request, like_id):
     # いいねするメッセージを取得

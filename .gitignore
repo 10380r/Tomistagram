@@ -4,4 +4,8 @@ markup
 t
 *.pyc
 *.pyo
-__pycache__
+*.log
+*.pot
+__pycache__/
+local_settings.py
+media
